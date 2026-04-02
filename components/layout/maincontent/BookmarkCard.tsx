@@ -1,8 +1,12 @@
 import { BookmarkCardProps } from "@/utils/types";
+import Eye from "@/public/assets/images/icon-visit-count.svg";
+import LastVisited from "@/public/assets/images/icon-last-visited.svg";
+import IconCreated from "@/public/assets/images/icon-created.svg";
 import React from "react";
 import Image from "next/image";
 import { ActionMenu } from "./ActionMenu";
 import { getFavicon } from "@/utils/helpers";
+import { formatDateShort } from "@/utils/helpers";
 function BookmarkCard({ bookmark }: BookmarkCardProps) {
   return (
     <article className=" w-full flex flex-col bg-card dark:border-none border border-border gap-4 rounded-[10px] p-4">
@@ -40,9 +44,20 @@ function BookmarkCard({ bookmark }: BookmarkCardProps) {
 
       {/* footer */}
       <div className="mt-auto pt-4 border-t flex items-center gap-4 text-sm text-muted-foreground">
-        <span>{bookmark.visitCount} visits</span>
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <Eye className="h-5 w-5" /> {bookmark.visit_count}
+        </div>
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <LastVisited className="h-4 w-4" />{" "}
+          {formatDateShort(bookmark.last_visited_at)}
+        </div>
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <IconCreated className="h-4 w-4" />
+          {formatDateShort(bookmark.created_at)}
+        </div>
+
         {bookmark.is_archived && (
-          <span className="px-2 py-1 text-muted-foreground text-preset-5 bg-background rounded-md cursor-pointer">
+          <span className="px-2 py-1 ml-auto text-muted-foreground text-preset-5 bg-background rounded-md cursor-pointer">
             Archived
           </span>
         )}

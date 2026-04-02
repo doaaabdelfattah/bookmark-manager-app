@@ -15,7 +15,7 @@ function TabLink({ value, children, href }: TabLinkProps) {
   return (
     <Link
       href={href}
-      className={`w-full focus-visible:ring-offset-1 focus-visible:ring-ring text-muted-foreground text-preset-3 focus-visible:ring-2 px-3 py-2 gap-2 flex rounded-md transition hover:bg-accent
+      className={`w-full focus-visible:ring-offset-1 mb-1 focus-visible:ring-ring text-muted-foreground text-preset-3 focus-visible:ring-2 px-3 py-2 gap-2 flex rounded-md transition hover:bg-accent
         ${isActive ? "bg-accent text-sidebar-foreground" : ""}
       `}
     >

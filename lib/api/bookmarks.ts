@@ -19,22 +19,40 @@ export async function getBookmarks() {
 }
 
 // ======= Get tags ========
+type TagWithCount = {
+  name: string;
+  count: number;
+};
 
-export async function getTags(): Promise<string[]> {
+export async function getTags(): Promise<TagWithCount[]> {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  if (!user) return [];
 
   const { data, error } = await supabase
     .from("bookmarks")
-    .select("tags")
-    .eq("user_id", user?.id);
+    .select("tags, is_archived")
+    .eq("user_id", user.id);
 
   if (error) throw error;
 
-  const tags = data?.flatMap((item) => item.tags || []).filter(Boolean);
+  const tagMap: Record<string, number> = {};
 
-  return [...new Set(tags)];
+  data.forEach((item) => {
+    if (item.is_archived) return;
+
+    item.tags?.forEach((tag: string) => {
+      tagMap[tag] = (tagMap[tag] || 0) + 1;
+    });
+  });
+
+  // tagMap = {react:2, js:2, css:1}
+
+  // Convert to array ====== [['react', 2], ['js',2]]
+  return Object.entries(tagMap)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
 }
 
 // ======== create bookmark =========
@@ -52,7 +70,7 @@ export async function createBookmark(input: CreateBookmarkInput) {
         user_id: user?.id,
         pinned: false,
         is_archived: false,
-        visitCount: 0,
+        visit_count: 0,
       },
     ])
     .select()
@@ -85,4 +103,37 @@ export async function archiveBookmark({ id, is_archived }: ArchiveInput) {
   }
 
   return data;
+}
+
+// ============ Update last visits =============
+type VistsInput = {
+  id: string;
+  currentCount: number;
+};
+export async function updateLastVisited({ id, currentCount }: VistsInput) {
+  const { error } = await supabase
+    .from("bookmarks")
+    .update({
+      visit_count: currentCount + 1,
+      last_visited_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.error("Update visit error:", error);
+    throw error;
+  }
+}
+
+// ============= Update Bookmark =============
+export async function updateBookmark({
+  id,
+  data,
+}: {
+  id: string;
+  data: Partial<CreateBookmarkInput>;
+}) {
+  const { error } = await supabase.from("bookmarks").update(data).eq("id", id);
+
+  if (error) throw error;
 }

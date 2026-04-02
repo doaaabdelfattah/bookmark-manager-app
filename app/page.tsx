@@ -39,7 +39,7 @@ export default function Home() {
   `}
       >
         <div className="h-[4.8rem] flex items-start p-5 ">
-          <Logo />
+          <Logo className="w-full" />
         </div>
         <div className="px-5 flex-1 min-h-0 ">
           <Sidebar />

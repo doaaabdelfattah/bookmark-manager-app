@@ -24,3 +24,16 @@ export function getFavicon(url: string) {
     return "/favicon-placeholder.png";
   }
 }
+
+// ======== Format time =========
+
+export function formatDateShort(dateString?: string | null) {
+  if (!dateString) return "Never";
+
+  const date = new Date(dateString);
+
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+  });
+}

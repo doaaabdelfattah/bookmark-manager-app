@@ -16,10 +16,10 @@ export function filterBookmarks(
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
 
     visited: (a: Bookmark, b: Bookmark) =>
-      new Date(b.lastVisited ?? 0).getTime() -
-      new Date(a.lastVisited ?? 0).getTime(),
+      new Date(b.last_visited_at ?? 0).getTime() -
+      new Date(a.last_visited_at ?? 0).getTime(),
 
-    popular: (a: Bookmark, b: Bookmark) => b.visitCount - a.visitCount,
+    popular: (a: Bookmark, b: Bookmark) => b.visit_count - a.visit_count,
   };
 
   return (
@@ -27,7 +27,7 @@ export function filterBookmarks(
       // archived
       .filter((b) => {
         if (tab === "archived") return b.is_archived;
-        return true;
+        return !b.is_archived;
       })
       // search results
       .filter((b) => b.title.toLowerCase().includes(query.toLowerCase()))

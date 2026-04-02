@@ -1,7 +1,6 @@
 "use client";
 import DropDownMenu from "./DropDownMenu";
 import BookmarksList from "./BookmarksList";
-// import data from "@/lib/data.json";
 import { useRouter, useSearchParams } from "next/navigation";
 import { filterBookmarks, SortOption } from "@/utils/filterBookmarks";
 import { useEffect } from "react";

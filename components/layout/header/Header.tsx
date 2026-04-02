@@ -23,12 +23,7 @@ function Header({ toggleSidebar }: HeaderProps) {
         <SearchBar />
       </div>
       <div className="flex items-center gap-4">
-        {/* <Button size="lg" variant="default">
-          <AddIcon className="w-4 h-4 flex items-center justify-center" />
-          <span className="max-sm:hidden">Add Bookmark</span>
-        </Button> */}
         <AddBookmarkDialog />
-
         <AvatarDropdown />
       </div>
     </div>

@@ -1,10 +1,9 @@
-import data from "@/lib/data.json";
-import { getTagsWithCount } from "@/utils/helpers";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useTags } from "@/hooks/useTags";
 
 function SideBarNav() {
   const searchParams = useSearchParams();
@@ -29,7 +28,7 @@ function SideBarNav() {
     // go to that url
     router.replace(`?${params.toString()}`);
   }
-  const tags = getTagsWithCount(data.bookmarks);
+  const { tags } = useTags();
   return (
     <FieldGroup className="">
       {tags.map((tag) => (

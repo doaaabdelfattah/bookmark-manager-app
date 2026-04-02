@@ -8,9 +8,9 @@ export type Bookmark = {
   tags: string[];
   pinned: boolean;
   is_archived: boolean;
-  visitCount: number;
+  visit_count: number;
   created_at: string;
-  lastVisited: string | null;
+  last_visited_at: string | null;
 };
 
 export type BookmarkCardProps = {

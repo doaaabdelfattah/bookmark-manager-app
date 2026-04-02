@@ -10,9 +10,9 @@ export const bookmarkSchema = z.object({
   tags: z.array(z.string()),
   pinned: z.boolean(),
   is_archived: z.boolean(),
-  visitCount: z.number(),
+  visit_count: z.number(),
   created_at: z.string(),
-  lastVisited: z.string().nullable(),
+  last_visited_at: z.string().nullable(),
 });
 
 export const createBookmarkSchema = z.object({

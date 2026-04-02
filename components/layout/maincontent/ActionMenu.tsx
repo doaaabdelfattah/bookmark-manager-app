@@ -11,11 +11,17 @@ import { useBookmarkActions } from "@/hooks/useBookmarkActions";
 import { AlertDialogBasic } from "@/components/dialogs/AlertDialogBasic";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { archiveBookmark } from "@/lib/api/bookmarks";
+import { archiveBookmark, updateLastVisited } from "@/lib/api/bookmarks";
+import { DialogContent, Dialog } from "@/components/ui/dialog";
+import { AddBookmarkForm } from "../forms/AddBookmarkForm";
 
 export function ActionMenu({ bookmark }: BookmarkCardProps) {
+  const [isOpenArchive, setIsOpenArchive] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
   const queryClient = useQueryClient();
 
+  // ===== Archive Functions ================
   const archiveMutation = useMutation({
     mutationFn: archiveBookmark,
     onSuccess: () => {
@@ -23,11 +29,25 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
       setIsOpenArchive(false);
     },
   });
-  const [isOpenArchive, setIsOpenArchive] = useState(false);
+  // ======== Update Vists Functions ================
+  const visitMutation = useMutation({
+    mutationFn: updateLastVisited,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["bookmarks"] });
+    },
+  });
 
   const actions = useBookmarkActions(bookmark, {
     onArchive: () => setIsOpenArchive(true),
-    onEdit: () => {},
+    onEdit: () => setIsEditOpen(true),
+    onVisit: () => {
+      visitMutation.mutate({
+        id: bookmark.id,
+        currentCount: bookmark.visit_count,
+      });
+
+      window.open(bookmark.url, "_blank");
+    },
   });
   return (
     <>
@@ -44,8 +64,7 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
             return (
               <DropdownMenuItem
                 key={action.id}
-                onSelect={(e) => {
-                  // e.preventDefault();
+                onSelect={() => {
                   action.onSelect();
                 }}
                 className="flex items-center gap-3 cursor-pointer"
@@ -68,12 +87,25 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
             id: bookmark.id,
             is_archived: bookmark.is_archived,
           });
-          console.log("archived: ", bookmark.id);
           setIsOpenArchive(false);
         }}
       >
         Are you sure you want to archive this bookmark?
       </AlertDialogBasic>
+      <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+        <DialogContent>
+          <AddBookmarkForm
+            setOpen={setIsEditOpen}
+            bookmarkId={bookmark.id}
+            initialData={{
+              title: bookmark.title,
+              url: bookmark.url,
+              description: bookmark.description,
+              tags: bookmark.tags,
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

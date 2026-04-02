@@ -26,7 +26,7 @@ export function filterBookmarks(
     data
       // archived
       .filter((b) => {
-        if (tab === "archived") return b.isArchived;
+        if (tab === "archived") return b.is_archived;
         return true;
       })
       // search results

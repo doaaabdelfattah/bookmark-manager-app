@@ -1,4 +1,7 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Field,
   FieldDescription,
@@ -16,9 +19,12 @@ import {
   signUpSchema,
   SignUpSchemaInput,
 } from "@/lib/api/validation/auth.schema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { signUp } from "@/lib/api/auth";
+import Link from "next/link";
+
 function SignupForm() {
+  const router = useRouter();
   const form = useForm<SignUpSchemaInput>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -31,11 +37,12 @@ function SignupForm() {
   const mutation = useMutation({
     mutationFn: signUp,
     onSuccess: () => {
-  toast.success("Account created successfully");
-  router.push("/login");
-}
-    onError: () => {
-      toast.error("Something went wrong");
+      toast.success("Account created successfully");
+      form.reset();
+      router.push("/signin");
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Something went wrong");
     },
   });
 
@@ -63,7 +70,7 @@ function SignupForm() {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Email address *</FieldLabel>
-              <Input {...field} />
+              <Input type="email" {...field} />
               {fieldState.error && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -86,7 +93,7 @@ function SignupForm() {
               {mutation.isPending ? "Creating..." : "Create Account"}
             </Button>
             <FieldDescription className="px-6 text-center">
-              Already have an account? <a href="#">Sign in</a>
+              Already have an account? <Link href="/auth/signin">Sign in</Link>
             </FieldDescription>
           </Field>
         </FieldGroup>

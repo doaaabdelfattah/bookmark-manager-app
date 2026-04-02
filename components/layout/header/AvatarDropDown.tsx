@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "./ModeToggle";
+import { signOut } from "@/lib/api/auth";
 
 export function AvatarDropdown() {
   return (
@@ -59,7 +60,7 @@ export function AvatarDropdown() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem className="cursor-pointer" onClick={signOut}>
             <Logout />
             Log out
           </DropdownMenuItem>

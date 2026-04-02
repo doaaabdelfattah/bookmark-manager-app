@@ -4,11 +4,22 @@ import Header from "@/components/layout/header/Header";
 import Logo from "@/components/layout/Logo";
 import MainContent from "@/components/layout/maincontent/MainContent";
 import Sidebar from "@/components/layout/sidebar/Sidebar";
-import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/auth/signin");
+    }
+  }, [user, loading, router]);
+
+  if (loading) return <p>Loading...</p>;
   return (
     <div className="grid min-h-screen grid-rows-[4.8rem_1fr] lg:grid-cols-[18.75rem_1fr] lg:[grid-template-areas:'sidebar_header''sidebar_main']">
       {/* ===================== Sidebar ==================== */}

@@ -1,3 +1,4 @@
+import SignupForm from "@/components/layout/forms/SignupForm";
 import Logo from "@/components/layout/Logo";
 import {
   Card,
@@ -7,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function SignupForm() {
+export default function SignupPage() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Card className="min-w-112.5">
@@ -21,7 +22,9 @@ export default function SignupForm() {
             searchable, and always within reach.
           </CardDescription>
         </CardHeader>
-        <CardContent>{/* <SignupForm /> */}</CardContent>
+        <CardContent>
+          <SignupForm />
+        </CardContent>
       </Card>
     </div>
   );

@@ -15,6 +15,7 @@ export function getTagsWithCount(bookmarks: Bookmark[]) {
   }));
 }
 
+// ======== get favicon of the website ========
 export function getFavicon(url: string) {
   try {
     const domain = new URL(url).hostname;

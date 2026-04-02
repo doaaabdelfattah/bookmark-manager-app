@@ -10,8 +10,19 @@ import { BookmarkCardProps } from "@/utils/types";
 import { useBookmarkActions } from "@/hooks/useBookmarkActions";
 import { AlertDialogBasic } from "@/components/dialogs/AlertDialogBasic";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { archiveBookmark } from "@/lib/api/bookmarks";
 
 export function ActionMenu({ bookmark }: BookmarkCardProps) {
+  const queryClient = useQueryClient();
+
+  const archiveMutation = useMutation({
+    mutationFn: archiveBookmark,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["bookmarks"] });
+      setIsOpenArchive(false);
+    },
+  });
   const [isOpenArchive, setIsOpenArchive] = useState(false);
 
   const actions = useBookmarkActions(bookmark, {
@@ -34,7 +45,7 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
               <DropdownMenuItem
                 key={action.id}
                 onSelect={(e) => {
-                  e.preventDefault();
+                  // e.preventDefault();
                   action.onSelect();
                 }}
                 className="flex items-center gap-3 cursor-pointer"
@@ -48,11 +59,18 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
       </DropdownMenu>
 
       <AlertDialogBasic
-        title="Archive bookmark"
-        confirm="Archive"
+        title={bookmark.is_archived ? "Unarchive bookmark" : "Archive bookmark"}
+        confirm={bookmark.is_archived ? "Unarchive" : "Archive"}
         open={isOpenArchive}
         setOpen={setIsOpenArchive}
-        action={() => console.log("archive bookmark")}
+        action={() => {
+          archiveMutation.mutate({
+            id: bookmark.id,
+            is_archived: bookmark.is_archived,
+          });
+          console.log("archived: ", bookmark.id);
+          setIsOpenArchive(false);
+        }}
       >
         Are you sure you want to archive this bookmark?
       </AlertDialogBasic>

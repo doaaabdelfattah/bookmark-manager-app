@@ -66,7 +66,7 @@ export function useBookmarkActions(
 
     {
       id: "archive",
-      label: "Archive",
+      label: bookmark.is_archived ? "Unarchive" : "Archive",
       icon: ArchiveIcon,
       onSelect: handlers.onArchive,
     },

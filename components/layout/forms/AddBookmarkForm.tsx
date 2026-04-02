@@ -22,12 +22,7 @@ import {
 } from "@/lib/api/validation/bookmark.schema";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group";
+import { InputGroup, InputGroupTextarea } from "@/components/ui/input-group";
 import { useTags } from "@/hooks/useTags";
 import TagsInput from "./TagsInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -144,7 +139,9 @@ export function AddBookmarkForm({ setOpen }) {
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit">Add Bookmark</Button>
+          <Button type="submit" disabled={mutation.isPending}>
+            {mutation.isPending ? "Adding..." : "Add Bookmark"}
+          </Button>
         </DialogFooter>
       </form>
     </Dialog>

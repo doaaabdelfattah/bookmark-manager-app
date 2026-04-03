@@ -32,7 +32,7 @@ type Props = {
   initialData?: CreateBookmarkInput;
   bookmarkId?: string;
 };
-export function AddBookmarkForm({ setOpen, initialData, bookmarkId }: Props) {
+export function BookmarkForm({ setOpen, initialData, bookmarkId }: Props) {
   const queryClient = useQueryClient();
   const { tags } = useTags();
   const form = useForm<CreateBookmarkInput>({
@@ -84,7 +84,7 @@ export function AddBookmarkForm({ setOpen, initialData, bookmarkId }: Props) {
           the favicon automatically from the URL.
         </DialogDescription>
       </DialogHeader>
-      <FieldGroup className="my-8">
+      <FieldGroup className="my-8 gap-3">
         {/* ====== title ===== */}
         <Controller
           name="title"

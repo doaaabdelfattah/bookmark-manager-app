@@ -1,7 +1,7 @@
 import { DialogContent } from "@/components/ui/dialog";
 import { Dialog } from "radix-ui";
 import React from "react";
-import { AddBookmarkForm } from "./AddBookmarkForm";
+import { BookmarkForm } from "./BookmarkForm";
 
 export default function EditBookmarkForm({
   setIsEditOpen,
@@ -12,7 +12,7 @@ export default function EditBookmarkForm({
     <>
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         <DialogContent>
-          <AddBookmarkForm
+          <BookmarkForm
             setOpen={setIsEditOpen}
             bookmarkId={bookmark.id}
             initialData={{

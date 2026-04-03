@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { AddBookmarkForm } from "@/components/layout/forms/AddBookmarkForm";
+import { BookmarkForm } from "@/components/layout/forms/BookmarkForm";
 import AddIcon from "@/public/assets/images/icon-add.svg";
 import { Button } from "../ui/button";
 import { useState } from "react";
@@ -27,7 +27,7 @@ export default function AddBookmarkDialog() {
         <DialogTitle>
           <VisuallyHidden>Add Bookmark</VisuallyHidden>
         </DialogTitle>
-        <AddBookmarkForm setOpen={setOpen} />
+        <BookmarkForm setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );

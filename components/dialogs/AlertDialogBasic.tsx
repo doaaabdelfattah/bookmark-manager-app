@@ -18,6 +18,7 @@ type AlertDialogProps = {
   setOpen: (open: boolean) => void;
   action: () => void;
   children: ReactNode;
+  variant?: "default" | "destructive";
 };
 
 export function AlertDialogBasic({
@@ -26,6 +27,7 @@ export function AlertDialogBasic({
   confirm,
   setOpen,
   action,
+  variant = "default",
   children,
 }: AlertDialogProps) {
   return (
@@ -40,7 +42,9 @@ export function AlertDialogBasic({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction onClick={action}>{confirm}</AlertDialogAction>
+          <AlertDialogAction variant={variant} onClick={action}>
+            {confirm}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

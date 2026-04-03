@@ -1,8 +1,7 @@
 "use client";
-
 import * as React from "react";
-import { Input } from "@/components/ui/input";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 type Props = {
   value: string[];
@@ -42,7 +41,7 @@ export default function TagsInput({
       <FieldLabel>Tags *</FieldLabel>
 
       {/* input container */}
-      <div className="border rounded-md px-2 py-2 flex flex-wrap items-center gap-2 focus-within:ring-2 focus-within:ring-ring">
+      <div className="border rounded-md px-2 py-2 flex flex-wrap items-center gap-2 focus-within:ring-1 focus-within:ring-ring placeholder:text-muted-foreground shadow-none focus-visible:ring-0 dark:bg-transparent">
         {/* existing tags */}
         {value.map((tag, i) => (
           <span

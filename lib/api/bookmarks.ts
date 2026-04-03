@@ -137,3 +137,13 @@ export async function updateBookmark({
 
   if (error) throw error;
 }
+
+// ============ DELETE bookmark
+export async function deleteBookmark({ id }) {
+  const { error } = await supabase.from("bookmarks").delete().eq("id", id);
+
+  if (error) {
+    console.error("Update visit error:", error);
+    throw error;
+  }
+}

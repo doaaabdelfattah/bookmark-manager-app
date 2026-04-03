@@ -1,8 +1,5 @@
 import SearchBar from "./SearchBar";
-import { Button } from "../../ui/button";
-import AddIcon from "@/public/assets/images/icon-add.svg";
 import MenuIcon from "@/public/assets/images/icon-menu-hamburger.svg";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AvatarDropdown } from "./AvatarDropDown";
 import AddBookmarkDialog from "@/components/dialogs/AddBookmarkDialog";
 type HeaderProps = {

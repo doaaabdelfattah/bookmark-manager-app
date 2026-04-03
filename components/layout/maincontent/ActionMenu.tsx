@@ -10,44 +10,27 @@ import { BookmarkCardProps } from "@/utils/types";
 import { useBookmarkActions } from "@/hooks/useBookmarkActions";
 import { AlertDialogBasic } from "@/components/dialogs/AlertDialogBasic";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { archiveBookmark, updateLastVisited } from "@/lib/api/bookmarks";
 import { DialogContent, Dialog } from "@/components/ui/dialog";
-import { AddBookmarkForm } from "../forms/AddBookmarkForm";
+import { BookmarkForm } from "../forms/BookmarkForm";
+import { useBookmarkMutations } from "@/hooks/useBookmarkMutations";
 
 export function ActionMenu({ bookmark }: BookmarkCardProps) {
   const [isOpenArchive, setIsOpenArchive] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
-
-  const queryClient = useQueryClient();
-
-  // ===== Archive Functions ================
-  const archiveMutation = useMutation({
-    mutationFn: archiveBookmark,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["bookmarks"] });
-      setIsOpenArchive(false);
-    },
-  });
-  // ======== Update Vists Functions ================
-  const visitMutation = useMutation({
-    mutationFn: updateLastVisited,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["bookmarks"] });
-    },
-  });
+  const { archive, deleteB, visit } = useBookmarkMutations();
 
   const actions = useBookmarkActions(bookmark, {
     onArchive: () => setIsOpenArchive(true),
     onEdit: () => setIsEditOpen(true),
     onVisit: () => {
-      visitMutation.mutate({
+      visit.mutate({
         id: bookmark.id,
         currentCount: bookmark.visit_count,
       });
-
       window.open(bookmark.url, "_blank");
     },
+    onDelete: () => setIsOpenDelete(true),
   });
   return (
     <>
@@ -77,13 +60,14 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
         </DropdownMenuContent>
       </DropdownMenu>
 
+      {/* ========= Alert For Archive =========== */}
       <AlertDialogBasic
         title={bookmark.is_archived ? "Unarchive bookmark" : "Archive bookmark"}
         confirm={bookmark.is_archived ? "Unarchive" : "Archive"}
         open={isOpenArchive}
         setOpen={setIsOpenArchive}
         action={() => {
-          archiveMutation.mutate({
+          archive.mutate({
             id: bookmark.id,
             is_archived: bookmark.is_archived,
           });
@@ -92,9 +76,27 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
       >
         Are you sure you want to archive this bookmark?
       </AlertDialogBasic>
+      {/* ========= Alert For Delete =========== */}
+      <AlertDialogBasic
+        title="Delete"
+        confirm="Delete Permenanytly"
+        variant="destructive"
+        open={isOpenDelete}
+        setOpen={setIsOpenDelete}
+        action={() => {
+          deleteB.mutate({
+            id: bookmark.id,
+          });
+          setIsOpenDelete(false);
+        }}
+      >
+        Are you sure you want to delete this bookmark?
+      </AlertDialogBasic>
+
+      {/* =========== Dialog for Edit bookmark ========= */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         <DialogContent>
-          <AddBookmarkForm
+          <BookmarkForm
             setOpen={setIsEditOpen}
             bookmarkId={bookmark.id}
             initialData={{

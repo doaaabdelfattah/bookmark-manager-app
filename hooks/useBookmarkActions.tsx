@@ -15,6 +15,7 @@ type BookmarkActionHandlers = {
   onArchive: () => void;
   onVisit: () => void;
   onDelete: () => void;
+  onPin: () => void;
 };
 export function useBookmarkActions(
   bookmark: Bookmark,
@@ -69,11 +70,7 @@ export function useBookmarkActions(
       id: "pin",
       label: bookmark.pinned ? "Unpin" : "Pin",
       icon: PinIcon,
-      onSelect: () => {
-        toast.success("Bookmark pinned to top.", {
-          icon: <PinIcon className="text-[#014745] dark:text-white" />,
-        });
-      },
+      onSelect: handlers.onPin,
     },
     {
       id: "edit",

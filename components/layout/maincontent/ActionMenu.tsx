@@ -18,7 +18,7 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
   const [isOpenArchive, setIsOpenArchive] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const { archive, deleteB, visit } = useBookmarkMutations();
+  const { archive, deleteB, visit, pin } = useBookmarkMutations();
 
   const actions = useBookmarkActions(bookmark, {
     onArchive: () => setIsOpenArchive(true),
@@ -31,7 +31,13 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
       window.open(bookmark.url, "_blank");
     },
     onDelete: () => setIsOpenDelete(true),
+    onPin: () =>
+      pin.mutate({
+        id: bookmark.id,
+        pinned: bookmark.pinned,
+      }),
   });
+
   return (
     <>
       <DropdownMenu>
@@ -78,8 +84,8 @@ export function ActionMenu({ bookmark }: BookmarkCardProps) {
       </AlertDialogBasic>
       {/* ========= Alert For Delete =========== */}
       <AlertDialogBasic
-        title="Delete"
-        confirm="Delete Permenanytly"
+        title="Delete bookmark"
+        confirm="Delete permanently"
         variant="destructive"
         open={isOpenDelete}
         setOpen={setIsOpenDelete}

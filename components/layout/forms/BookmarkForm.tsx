@@ -24,6 +24,9 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { InputGroup, InputGroupTextarea } from "@/components/ui/input-group";
 import { useTags } from "@/hooks/useTags";
+
+import CheckIcon from "@/public/assets/images/icon-check.svg";
+
 import TagsInput from "./TagsInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createBookmark, updateBookmark } from "@/lib/api/bookmarks";
@@ -56,7 +59,12 @@ export function BookmarkForm({ setOpen, initialData, bookmarkId }: Props) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bookmarks"] });
       queryClient.invalidateQueries({ queryKey: ["tags"] });
-      toast.success(bookmarkId ? "Updated" : "Added");
+      toast.success(
+        bookmarkId ? "Changes saved." : "Bookmark added successfully.",
+        {
+          icon: <CheckIcon className="text-[#014745] dark:text-white" />,
+        },
+      );
       setOpen(false);
       form.reset();
     },
@@ -80,8 +88,9 @@ export function BookmarkForm({ setOpen, initialData, bookmarkId }: Props) {
           {bookmarkId ? "Edit Bookmark" : "Add Bookmark"}
         </DialogTitle>
         <DialogDescription className="text-preset-4-medium">
-          Save a link with details to keep your collection organized. We extract
-          the favicon automatically from the URL.
+          {bookmarkId
+            ? "Update your saved link details — change the title, description, URL, or tags anytime."
+            : "Save a link with details to keep your collection organized. We extract the favicon automatically from the URL"}
         </DialogDescription>
       </DialogHeader>
       <FieldGroup className="my-8 gap-3">

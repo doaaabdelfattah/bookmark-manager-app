@@ -147,3 +147,19 @@ export async function deleteBookmark({ id }) {
     throw error;
   }
 }
+
+//================ toggle pin/unpin ==========
+export async function togglePin({
+  id,
+  pinned,
+}: {
+  id: string;
+  pinned: boolean;
+}) {
+  const { error } = await supabase
+    .from("bookmarks")
+    .update({ pinned: !pinned })
+    .eq("id", id);
+
+  if (error) throw error;
+}

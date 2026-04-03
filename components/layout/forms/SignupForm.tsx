@@ -39,7 +39,7 @@ function SignupForm() {
     onSuccess: () => {
       toast.success("Account created successfully");
       form.reset();
-      router.push("/signin");
+      router.push("/auth/signin");
     },
     onError: (error: any) => {
       toast.error(error.message || "Something went wrong");
@@ -51,8 +51,12 @@ function SignupForm() {
     mutation.mutate(data);
   }
   return (
-    <form id="signup-form" onSubmit={form.handleSubmit(onSubmit)}>
-      <FieldGroup>
+    <form
+      id="signup-form"
+      className="mt-2"
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <FieldGroup className="gap-4">
         <Controller
           name="name"
           control={form.control}
@@ -89,11 +93,21 @@ function SignupForm() {
 
         <FieldGroup>
           <Field>
-            <Button type="submit" disabled={mutation.isPending}>
+            <Button
+              className="mb-6"
+              type="submit"
+              disabled={mutation.isPending}
+            >
               {mutation.isPending ? "Creating..." : "Create Account"}
             </Button>
-            <FieldDescription className="px-6 text-center">
-              Already have an account? <Link href="/auth/signin">Sign in</Link>
+            <FieldDescription className="px-6 text-center text-preset-4-medium">
+              Already have an account?{" "}
+              <Link
+                href="/auth/signin"
+                className="text-foreground ml-2 text-preset-4 !no-underline"
+              >
+                Sign in
+              </Link>
             </FieldDescription>
           </Field>
         </FieldGroup>

@@ -50,14 +50,18 @@ function SignInForm() {
     mutation.mutate(data);
   }
   return (
-    <form id="signin-form" onSubmit={form.handleSubmit(onSubmit)}>
-      <FieldGroup>
+    <form
+      id="signin-form"
+      className="mt-2"
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <FieldGroup className="gap-4">
         <Controller
           name="email"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Email address *</FieldLabel>
+              <FieldLabel className="text-preset-4">Email address </FieldLabel>
               <Input type="email" {...field} />
               {fieldState.error && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -68,7 +72,7 @@ function SignInForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Password *</FieldLabel>
+              <FieldLabel>Password </FieldLabel>
               <Input type="password" {...field} />
               {fieldState.error && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -77,11 +81,21 @@ function SignInForm() {
 
         <FieldGroup>
           <Field>
-            <Button type="submit" disabled={mutation.isPending}>
+            <Button
+              type="submit"
+              disabled={mutation.isPending}
+              className="mb-6"
+            >
               {mutation.isPending ? "Logging..." : "Log in"}
             </Button>
-            <FieldDescription className="px-6 text-center">
-              Don’t have an account? <Link href="/auth/signup">Sign up</Link>
+            <FieldDescription className="px-6 text-center text-preset-4-medium ">
+              Don’t have an account?{" "}
+              <Link
+                href="/auth/signup"
+                className="text-foreground ml-2 text-preset-4 !no-underline"
+              >
+                Sign up
+              </Link>
             </FieldDescription>
           </Field>
         </FieldGroup>

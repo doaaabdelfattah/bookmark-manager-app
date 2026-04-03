@@ -2,7 +2,7 @@ import { BookmarkCardProps } from "@/utils/types";
 import Eye from "@/public/assets/images/icon-visit-count.svg";
 import LastVisited from "@/public/assets/images/icon-last-visited.svg";
 import IconCreated from "@/public/assets/images/icon-created.svg";
-import React from "react";
+import PinIcon from "@/public/assets/images/icon-pin.svg";
 import Image from "next/image";
 import { ActionMenu } from "./ActionMenu";
 import { getFavicon } from "@/utils/helpers";
@@ -55,7 +55,7 @@ function BookmarkCard({ bookmark }: BookmarkCardProps) {
           <IconCreated className="h-4 w-4" />
           {formatDateShort(bookmark.created_at)}
         </div>
-
+        {bookmark.pinned && <PinIcon className="ml-auto" />}
         {bookmark.is_archived && (
           <span className="px-2 py-1 ml-auto text-muted-foreground text-preset-5 bg-background rounded-md cursor-pointer">
             Archived

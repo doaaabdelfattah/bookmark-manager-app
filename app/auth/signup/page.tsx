@@ -13,7 +13,7 @@ export default function SignupPage() {
     <div className="flex items-center justify-center min-h-screen">
       <Card className="min-w-112.5">
         <CardHeader className="">
-          <Logo className="my-8 " lightClassName="w-1/2" />
+          <Logo className="my-6 " lightClassName="w-2/3" />
           <CardTitle className="text-accent-foreground text-preset-1 ">
             Create an account
           </CardTitle>

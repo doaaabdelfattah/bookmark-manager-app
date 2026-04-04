@@ -139,7 +139,7 @@ export async function updateBookmark({
 }
 
 // ============ DELETE bookmark
-export async function deleteBookmark({ id }) {
+export async function deleteBookmark({ id }: { id: string }) {
   const { error } = await supabase.from("bookmarks").delete().eq("id", id);
 
   if (error) {

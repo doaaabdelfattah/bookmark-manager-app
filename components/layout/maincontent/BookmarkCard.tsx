@@ -21,7 +21,9 @@ function BookmarkCard({ bookmark }: BookmarkCardProps) {
         />
         <div className="mr-auto min-w-0">
           <h3 className="text-preset-2 capitalize">{bookmark.title}</h3>
-          <p className="text-preset-5 text-muted-foreground">{bookmark.url}</p>
+          <p className="text-preset-5 text-muted-foreground wrap-break-word">
+            {bookmark.url}
+          </p>
         </div>
         <ActionMenu bookmark={bookmark} />
       </div>

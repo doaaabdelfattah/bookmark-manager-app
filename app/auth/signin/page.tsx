@@ -10,8 +10,8 @@ import {
 
 export default function SigninPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <Card className="min-w-112.5">
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <Card className="lg:min-w-112.5 min-w-full">
         <CardHeader className="">
           <Logo className="my-6 " lightClassName="w-2/3" />
           <CardTitle className="text-accent-foreground text-preset-1 ">

@@ -85,7 +85,7 @@ function SignInForm() {
             <Button
               type="submit"
               disabled={mutation.isPending}
-              className="mb-6"
+              className="mb-2"
             >
               {mutation.isPending ? "Logging..." : "Log in"}
             </Button>
@@ -93,6 +93,7 @@ function SignInForm() {
               provider="google"
               variant="outline"
               onClick={googleAuth}
+              className="mb-2"
             />
             <FieldDescription className="px-6 text-center text-preset-4-medium ">
               Don’t have an account?{" "}

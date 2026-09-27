@@ -33,7 +33,7 @@ export async function getTags(): Promise<TagWithCount[]> {
   const { data, error } = await supabase
     .from("bookmarks")
     .select("tags, is_archived")
-    .eq("user_id", user.id);
+    .eq("user_id", user?.id);
 
   if (error) throw error;
 

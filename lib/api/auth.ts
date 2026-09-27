@@ -38,3 +38,16 @@ export async function signOut() {
     throw error;
   }
 }
+export async function googleAuth() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+  console.log("GOOGLE DATA:", data);
+  console.log("GOOGLE ERROR:", error);
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+  return data;
+}

@@ -49,9 +49,17 @@ export default function MainContent() {
         <h1 className="text-preset-1 text-foreground">{title}</h1>
         <DropDownMenu />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-5 ">
-        <BookmarksList bookmarks={bookmarks} isLoading={isLoading} />
-      </div>
+      {!isLoading && bookmarks.length === 0 ? (
+        <p className="mt-10 text-center text-muted-foreground">
+          {query
+            ? "No bookmarks match your search."
+            : "You don't have any bookmarks yet."}
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-5">
+          <BookmarksList bookmarks={bookmarks} isLoading={isLoading} />
+        </div>
+      )}
     </div>
   );
 }

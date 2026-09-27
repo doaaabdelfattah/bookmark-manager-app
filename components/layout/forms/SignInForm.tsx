@@ -20,8 +20,9 @@ import {
   SignInSchemaInput,
 } from "@/lib/api/validation/auth.schema";
 import { useMutation } from "@tanstack/react-query";
-import { signIn } from "@/lib/api/auth";
+import { googleAuth, signIn } from "@/lib/api/auth";
 import Link from "next/link";
+import { SocialButton } from "@/components/shadcnblocks/social-button";
 
 function SignInForm() {
   const router = useRouter();
@@ -88,11 +89,16 @@ function SignInForm() {
             >
               {mutation.isPending ? "Logging..." : "Log in"}
             </Button>
+            <SocialButton
+              provider="google"
+              variant="outline"
+              onClick={googleAuth}
+            />
             <FieldDescription className="px-6 text-center text-preset-4-medium ">
               Don’t have an account?{" "}
               <Link
                 href="/auth/signup"
-                className="text-foreground ml-2 text-preset-4 !no-underline"
+                className="text-foreground ml-2 text-preset-4 no-underline"
               >
                 Sign up
               </Link>

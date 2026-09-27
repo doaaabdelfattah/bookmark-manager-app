@@ -8,7 +8,7 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 👇 أول مرة نجيب user
+    // first time to get user
     const getUser = async () => {
       const {
         data: { user },
@@ -20,9 +20,11 @@ export function useAuth() {
 
     getUser();
 
-    // 👇 listen لأي تغيير (login / logout)
+    // Listen to any change
     const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      (event, session) => {
+        console.log("AUTH EVENT:", event);
+        console.log("SESSION:", session);
         setUser(session?.user ?? null);
       },
     );

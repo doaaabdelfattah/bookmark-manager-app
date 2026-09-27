@@ -17,6 +17,7 @@ export default function Home() {
     if (!loading && !user) {
       router.push("/auth/signin");
     }
+    console.log(user);
   }, [user, loading, router]);
 
   if (loading) return <p>Loading...</p>;

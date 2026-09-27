@@ -13,18 +13,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "./ModeToggle";
 import { signOut } from "@/lib/api/auth";
+import { useAuth } from "@/hooks/useAuth";
 
 export function AvatarDropdown() {
+  const { user, loading } = useAuth();
+  const avatarUrl = user?.user_metadata?.avatar_url;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="rounded-full">
           <Avatar size="lg">
             <AvatarImage
-              src="/assets/images/image-avatar.webp"
-              alt="avatar image"
+              key={avatarUrl}
+              src={user?.user_metadata?.avatar_url}
+              alt={user?.user_metadata?.full_name || "User"}
             />
-            {/* <AvatarFallback>CN</AvatarFallback> */}
+            {/* <AvatarFallback>
+              {user?.user_metadata?.full_name?.charAt(0) || "U"}
+            </AvatarFallback> */}
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -35,15 +42,17 @@ export function AvatarDropdown() {
             <div className="flex items-center w-full gap-4 ">
               <Avatar size="lg">
                 <AvatarImage
-                  src="/assets/images/image-avatar.webp"
-                  alt="shadcn"
+                  src={user?.user_metadata?.avatar_url}
+                  alt={user?.user_metadata?.full_name || "User"}
                 />
                 {/* <AvatarFallback>CN</AvatarFallback> */}
               </Avatar>
               <span>
-                <p className="text-sidebar-foreground">Emily Carter</p>
+                <p className="text-sidebar-foreground">
+                  {user?.user_metadata?.name}
+                </p>
                 <p className="text-preset-4-medium text-muted-foreground">
-                  emily101@gmail.com
+                  {user?.email}
                 </p>
               </span>
             </div>

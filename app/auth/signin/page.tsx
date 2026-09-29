@@ -7,7 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Sign in",
+};
 export default function SigninPage() {
   return (
     <div className="flex items-center justify-center min-h-screen p-4">

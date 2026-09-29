@@ -27,8 +27,47 @@ const manropeFont = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "TEST BOOKMARK",
-  description: "TEST DESCRIPTION",
+  title: {
+    default: "Bookmark Manager | Organize Your Bookmarks",
+    template: "%s | Bookmark Manager",
+  },
+
+  description:
+    "A modern bookmark manager for saving, organizing, searching, and managing your favorite websites.",
+
+  keywords: [
+    "bookmark manager",
+    "bookmark organizer",
+    "save bookmarks",
+    "bookmark app",
+    "web app",
+    "Next.js",
+    "React",
+  ],
+
+  metadataBase: new URL("https://bookmark-manager-app-six.vercel.app/"),
+
+  openGraph: {
+    title: "Bookmark Manager | Organize Your Bookmarks",
+    description:
+      "Save, organize, search, and manage your favorite websites with a modern bookmark manager.",
+    url: "https://bookmark-manager-app-six.vercel.app/",
+    siteName: "Bookmark Manager",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Bookmark Manager",
+      },
+    ],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
